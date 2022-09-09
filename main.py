@@ -8,7 +8,6 @@ FPS = 60
 WIDTH, HEIGHT = (700,400)
 WINDOW = pygame.display.set_mode((WIDTH,HEIGHT))
 VEL = 8
-BALL_VEL = 5
 
 # LEFT_PL = pygame.Rect(10,290,10,75)
 # RIGHT_PL = pygame.Rect(980,290,10,75)
@@ -18,10 +17,16 @@ BORDER = pygame.Rect(WIDTH/2 - 10, 0, 10, HEIGHT)
 BALL = pygame.Rect(WIDTH/2 - 10, HEIGHT/2,10,10 )
 
 class Ball:
-    
+    MAX_VEL = 8;
 
-def handleBall(ball):
-    ball.x +=
+    def __init__(self):
+        self.x_vel = self.MAX_VEL
+        self.y_vel = 0
+    
+    def draw(self,WINDOW):
+        pygame.draw.rect(WINDOW, (137,192,111), BALL,10,10)
+
+
 
 def moveLeftPL(keysPressed, obj):
     if keysPressed[pygame.K_a] and obj.x - VEL > 0: # left
@@ -54,7 +59,6 @@ def draw_window(left,right):
     pygame.draw.rect(WINDOW, (51,104,86), left)
     pygame.draw.rect(WINDOW, (51,104,86), right)
     pygame.draw.rect(WINDOW, (137,192,111), BORDER)
-    pygame.draw.rect(WINDOW, (137,192,111), BALL,10,10)
     pygame.display.update()
 
 def main():
