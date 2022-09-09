@@ -5,18 +5,23 @@ pygame.init()
 pygame.display.set_caption("PONG GAME")
 FPS = 60
 
-WIDTH, HEIGHT = (1000,700)
+WIDTH, HEIGHT = (700,400)
 WINDOW = pygame.display.set_mode((WIDTH,HEIGHT))
-VEL = 3
+VEL = 8
+BALL_VEL = 5
 
-LEFT_PL = pygame.Rect(10,290,10,75)
-RIGHT_PL = pygame.Rect(980,290,10,75)
-
+# LEFT_PL = pygame.Rect(10,290,10,75)
+# RIGHT_PL = pygame.Rect(980,290,10,75)
 
 BORDER = pygame.Rect(WIDTH/2 - 10, 0, 10, HEIGHT)
 
 BALL = pygame.Rect(WIDTH/2 - 10, HEIGHT/2,10,10 )
 
+class Ball:
+    
+
+def handleBall(ball):
+    ball.x +=
 
 def moveLeftPL(keysPressed, obj):
     if keysPressed[pygame.K_a] and obj.x - VEL > 0: # left
@@ -31,7 +36,7 @@ def moveLeftPL(keysPressed, obj):
     if keysPressed[pygame.K_s] and obj.y + VEL + obj.height < HEIGHT: # down
         obj.y += VEL
 
-def moveLeftPL(keysPressed, obj):
+def moveRightPL(keysPressed, obj):
     if keysPressed[pygame.K_LEFT] and obj.x - VEL > BORDER.x  : # left
         obj.x -= VEL
             
@@ -54,8 +59,8 @@ def draw_window(left,right):
 
 def main():
     
-    left = LEFT_PL
-    right = RIGHT_PL
+    left = pygame.Rect(10,HEIGHT/2 - 40 ,10,75)
+    right = pygame.Rect(WIDTH - 20,HEIGHT/2 - 40,10,75)
     
     
     run = True
@@ -72,7 +77,8 @@ def main():
                 pass
             
         keysPressed = pygame.key.get_pressed()
-        print(keysPressed)
+        # print(keysPressed)
+        moveRightPL(keysPressed,right)
         moveLeftPL(keysPressed, left)    
         draw_window(left,right)
     
