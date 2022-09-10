@@ -90,6 +90,10 @@ def main():
     right = pygame.Rect(WIDTH - 20,HEIGHT/2 - 40,10,75)
     ball = Ball(WIDTH/2-5,HEIGHT/2)
     
+    leftScore = 0
+    rightScore = 0
+
+
     run = True
     clock = pygame.time.Clock()
     
@@ -113,6 +117,10 @@ def main():
         ball.move()
         handleCollision(ball, left, right)
         
+        if(ball.x < 0):
+            rightScore += 1
+        elif ball.x > WIDTH:
+            leftScore += 1
         
     
     pygame.quit()
