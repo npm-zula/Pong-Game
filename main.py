@@ -5,6 +5,7 @@ pygame.init()
 pygame.display.set_caption("PONG GAME")
 FPS = 60
 
+SCORE_FONT = pygame.font.SysFont('cominsans', 40)
 WIDTH, HEIGHT = (700,400)
 WINDOW = pygame.display.set_mode((WIDTH,HEIGHT))
 VEL = 5
@@ -21,8 +22,8 @@ class Ball:
     RADIUS = 5
 
     def __init__(self,x,y):
-        self.x = x
-        self.y = y
+        self.x = self.ogX = x 
+        self.y = self.ogY = y 
         self.x_vel = self.MAX_VEL
         self.y_vel = 0
     
@@ -33,6 +34,14 @@ class Ball:
     def move(self):
         self.x += self.x_vel
         self.y += self.y_vel
+        
+    def reset(self):
+        pygame.time.delay(1000)
+        self.x = self.ogX
+        self.y = self.ogY
+        self.y_vel = 0
+        self.x_vel *= -1
+        
 
 def handleCollision(ball,left,right):
     if ball.y + ball.RADIUS >= HEIGHT:
@@ -76,8 +85,14 @@ def moveRightPL(keysPressed, obj):
     if keysPressed[pygame.K_DOWN] and obj.y + VEL + obj.height < HEIGHT: # down
         obj.y += VEL
     
-def draw_window(left,right,ball):
+def draw_window(left,right,ball, leftScore, rightScore):
     WINDOW.fill((223,248,208))
+    
+    leftScoreText = SCORE_FONT.render(f"{leftScore}", 1, (0,0,0))
+    rightScoreText = SCORE_FONT.render(f"{rightScore}", 1, (0,0,0))
+    WINDOW.blit(leftScoreText, (WIDTH//4 - leftScoreText.get_width()//2,20))
+    WINDOW.blit(rightScoreText, (3*WIDTH//4 - rightScoreText.get_width()//2,20))
+    
     pygame.draw.rect(WINDOW, (51,104,86), left)
     pygame.draw.rect(WINDOW, (51,104,86), right)
     pygame.draw.rect(WINDOW, (137,192,111), BORDER)
@@ -99,7 +114,7 @@ def main():
     
     while run:
         clock.tick(FPS)
-        draw_window(left,right,ball)
+        draw_window(left,right,ball, leftScore, rightScore)
         
         for event in pygame.event.get():
             if(event.type == pygame.QUIT):
@@ -119,8 +134,10 @@ def main():
         
         if(ball.x < 0):
             rightScore += 1
+            ball.reset()
         elif ball.x > WIDTH:
             leftScore += 1
+            ball.reset()
         
     
     pygame.quit()
