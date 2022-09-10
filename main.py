@@ -44,10 +44,22 @@ def handleCollision(ball,left,right):
         if ball.y >=  left.y and ball.y <= left.y + left.height:
             if ball.x - ball.RADIUS <= left.x + left.width:
                 ball.x_vel *= -1
+
+                middle_y = left.y + left.height/2
+                diffY = middle_y - ball.y
+                redFactor = left.height/2 / ball.MAX_VEL
+                y_vel = diffY /redFactor
+                ball.y_vel = -1 *y_vel
     else:
-            if (ball.y >=  right.y and ball.y <= right.y + right.height):
-                if(ball.x + ball.RADIUS >= right.x):
-                    ball.x_vel *= -1;
+        if (ball.y >=  right.y and ball.y <= right.y + right.height):
+            if(ball.x + ball.RADIUS >= right.x):
+                ball.x_vel *= -1;
+
+                middle_y = right.y + right.height/2
+                diffY = middle_y - ball.y
+                redFactor = right.height/2 / ball.MAX_VEL
+                y_vel = diffY /redFactor
+                ball.y_vel = -1 *y_vel
     
 
 def moveLeftPL(keysPressed, obj):
